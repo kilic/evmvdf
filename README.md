@@ -12,13 +12,14 @@ Prover sends the nonce along with the proof to the verifier so that verifier per
 
 ## Cost in Berlin EVM
 
-| operation              | cost in gas |
-| ---------------------- | ----------- |
-| verify VDF             | 173062      |
-| modexp (2048,256,2048) | 87012       |
-| modexp (256,256,256)   | 1666        |
-| mul2048                | 13519       |
-| miller rabin 15        | 30994       |
+| operation                         | cost in gas |
+| --------------------------------- | ----------- |
+| verify VDF                        | 173062      |
+| verify VDF with base and calldata | 207827      |
+| modexp (2048,256,2048)            | 87012       |
+| modexp (256,256,256)              | 1666        |
+| mul2048                           | 13519       |
+| miller rabin 15                   | 30994       |
 
 ## References
 

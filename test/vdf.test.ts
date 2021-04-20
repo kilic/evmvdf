@@ -52,5 +52,18 @@ describe('VDF', function () {
       t
     );
     console.log('cost verify:', cost.toString());
+
+    const tx = await C.gasCostVerify(
+      to256Bytes(g),
+      to256Bytes(proof.pi),
+      to256Bytes(proof.y),
+      to256Bytes(proof.q),
+      '0x',
+      proof.challenge.nonce,
+      t
+    );
+    const receipt = await tx.wait();
+
+    console.log('cost verify with base and calldata:', receipt.gasUsed.toString());
   });
 });

@@ -1,8 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity 0.7.3;
 
-import "hardhat/console.sol";
-
 contract VerifyVDF {
   uint256 constant RSA_MODULUS_0 = 0x31f55615172866bccc30f95054c824e733a5eb6817f7bc16399d48c6361cc7e5;
   uint256 constant RSA_MODULUS_1 = 0xbc729592642920f24c61dc5b3c3b7923e56b16a4d9d373d8721f24a3fc0f1b31;
