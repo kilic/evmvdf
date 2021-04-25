@@ -8,6 +8,10 @@ contract Test is VerifyVDF {
     return validateGroupElement(e);
   }
 
+  function testIsZeroGroupElement(bytes memory e) external pure returns (bool) {
+    return isZeroGroupElement(e);
+  }
+
   function testEqualNumber(bytes memory a, bytes memory b) external pure returns (bool) {
     return equalNumber(a, b);
   }

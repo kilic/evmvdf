@@ -27,6 +27,17 @@ describe('Arithmetic', function () {
       let a = randE();
       res = await C.testValidateGroupElement(to256Bytes(a));
       expect(res).true;
+      res = await C.testValidateGroupElement(to256Bytes(newE(0)));
+      expect(res).true;
+      res = await C.testValidateGroupElement(to256Bytes(newE(1)));
+      expect(res).true;
+
+      res = await C.testIsZeroGroupElement(to256Bytes(newE(0)));
+      expect(res).true;
+      res = await C.testIsZeroGroupElement(to256Bytes(a));
+      expect(res).false;
+      res = await C.testIsZeroGroupElement(to256Bytes(newE(1)));
+      expect(res).false;
     }
   });
 

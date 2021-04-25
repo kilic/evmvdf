@@ -29,8 +29,11 @@ contract VerifyVDF {
   ) public view returns (bool) {
     require(validateNonce(nonce), "invalid nonce");
     require(validateGroupElement(g), "invalid group element: g");
+    require(!isZeroGroupElement(g), "zero group element: g");
     require(validateGroupElement(pi), "invalid group element: pi");
+    require(!isZeroGroupElement(pi), "zero group element: pi");
     require(validateGroupElement(y), "invalid group element: y");
+    require(!isZeroGroupElement(y), "zero group element: y");
     require(validateGroupElement(q), "invalid group element: helper q");
 
     uint256 l = hashToPrime(g, y, nonce, dst);
@@ -348,34 +351,50 @@ contract VerifyVDF {
     valid = true;
     assembly {
       let ei := mload(add(e, 0x20))
-      valid := lt(ei, 0xc7970ceedcc3b0754490201a7aa613cd73911081c790f5f1a8726f463550bb5b)
-      if eq(ei, 0xc7970ceedcc3b0754490201a7aa613cd73911081c790f5f1a8726f463550bb5b) {
+      valid := lt(ei, RSA_MODULUS_7)
+      if eq(ei, RSA_MODULUS_7) {
         ei := mload(add(e, 0x40))
-        valid := lt(ei, 0x7ff0db8e1ea1189ec72f93d1650011bd721aeeacc2acde32a04107f0648c2813)
-        if eq(ei, 0x7ff0db8e1ea1189ec72f93d1650011bd721aeeacc2acde32a04107f0648c2813) {
+        valid := lt(ei, RSA_MODULUS_6)
+        if eq(ei, RSA_MODULUS_6) {
           ei := mload(add(e, 0x60))
-          valid := lt(ei, 0xa31f5b0b7765ff8b44b4b6ffc93384b646eb09c7cf5e8592d40ea33c80039f35)
-          if eq(ei, 0xa31f5b0b7765ff8b44b4b6ffc93384b646eb09c7cf5e8592d40ea33c80039f35) {
+          valid := lt(ei, RSA_MODULUS_5)
+          if eq(ei, RSA_MODULUS_5) {
             ei := mload(add(e, 0x80))
-            valid := lt(ei, 0xb4f14a04b51f7bfd781be4d1673164ba8eb991c2c4d730bbbe35f592bdef524a)
-            if eq(ei, 0xb4f14a04b51f7bfd781be4d1673164ba8eb991c2c4d730bbbe35f592bdef524a) {
+            valid := lt(ei, RSA_MODULUS_4)
+            if eq(ei, RSA_MODULUS_4) {
               ei := mload(add(e, 0xa0))
-              valid := lt(ei, 0xf7e8daefd26c66fc02c479af89d64d373f442709439de66ceb955f3ea37d5159)
-              if eq(ei, 0xf7e8daefd26c66fc02c479af89d64d373f442709439de66ceb955f3ea37d5159) {
+              valid := lt(ei, RSA_MODULUS_3)
+              if eq(ei, RSA_MODULUS_3) {
                 ei := mload(add(e, 0xc0))
-                valid := lt(ei, 0xf6135809f85334b5cb1813addc80cd05609f10ac6a95ad65872c909525bdad32)
-                if eq(ei, 0xf6135809f85334b5cb1813addc80cd05609f10ac6a95ad65872c909525bdad32) {
+                valid := lt(ei, RSA_MODULUS_2)
+                if eq(ei, RSA_MODULUS_2) {
                   ei := mload(add(e, 0xe0))
-                  valid := lt(ei, 0xbc729592642920f24c61dc5b3c3b7923e56b16a4d9d373d8721f24a3fc0f1b31)
-                  if eq(ei, 0xbc729592642920f24c61dc5b3c3b7923e56b16a4d9d373d8721f24a3fc0f1b31) {
+                  valid := lt(ei, RSA_MODULUS_1)
+                  if eq(ei, RSA_MODULUS_1) {
                     ei := mload(add(e, 0x100))
-                    valid := lt(ei, 0x31f55615172866bccc30f95054c824e733a5eb6817f7bc16399d48c6361cc7e5)
+                    valid := lt(ei, RSA_MODULUS_0)
                   }
                 }
               }
             }
           }
         }
+      }
+    }
+  }
+
+  function isZeroGroupElement(bytes memory e) internal pure returns (bool isZero) {
+    if (e.length != 256) {
+      return false;
+    }
+    isZero = true;
+    assembly {
+      for {
+        let off := 0x20
+      } lt(off, 0x101) {
+        off := add(off, 0x20)
+      } {
+        isZero := and(isZero, eq(mload(add(e, off)), 0))
       }
     }
   }
