@@ -42,7 +42,7 @@ contract VerifyVDF {
     }
     require(millerRabinPrimalityTest(l), "non prime challenge");
 
-    uint256 r = (1 << delay) % l;
+    uint256 r = modexp(2, delay, l);
     bytes memory u1 = modexp(pi, l);
     bytes memory u2 = modexp(g, r);
 
