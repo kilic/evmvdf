@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: Apache-2.0
 pragma solidity 0.7.3;
 
 contract VerifyVDF {
@@ -105,7 +105,6 @@ contract VerifyVDF {
       return false;
     }
     if (n & 1 == 0) {
-      require(1 == 2, "fuck you");
       return false;
     }
     uint256 d = n - 1;

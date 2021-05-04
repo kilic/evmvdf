@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: Apache-2.0
 pragma solidity 0.7.3;
 
 import { VerifyVDF } from "./VerifyVDF.sol";
